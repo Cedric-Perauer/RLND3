@@ -27,8 +27,8 @@ actor_loss = -self.critic_local(states, actions_pred).mean()
 
 ### Networks 
 
-Both the actor and critic networks are very simple feed forward networks with 2 hidden layers with ReLu activations of size 400 and 300 respectively. 
-Since the critic outputs a Q-value, it does not have an activation function in the final layer. Compared to that, the actor uses a tanh function at the output to output a continious action in the range of [-1,1] for each of the 2 actions (torque that is sent to each joint). 
+Both the actor and critic networks are very simple feed forward networks with 2 hidden layers with ReLu activations of size 400 and 300 respectively. Batch Norm is used after the first layer. 
+Since the critic outputs a Q-value, it does not have an activation function in the final layer. Compared to that, the actor uses a tanh function at the output to output a continious action in the range of [-1,1] for each of the actions. 
 
 ## Hyperparameters 
 
@@ -58,13 +58,15 @@ OU_THETA = 0.15
 
 ## Results
 
-The Algorithm achieves the required average reward of at least 30 over the last 100 episodes over all agents in episode 121 when trained on the multi agent enviornment.
+The Algorithm achieves the required average reward of at least 0.5 over the last 100 episodes in episode 261.
 A plot of the reward over the episodes is provided below. 
 
-<img src="result.png" alt="drawing" width="600"/>
+<img src="graph.png" alt="drawing" width="600"/>
 
 ## Possible Improvements 
 
+- Hyperaparameter Tuning 
+- Prioritized Experience Replay
 - [GAE](https://arxiv.org/abs/1506.02438) : combats the bias/variance tradeoff of TD estimates by introducing a hyperparameter lambda that allow to combine monte-carlo and TD estimates
 - [Q-PROP](https://arxiv.org/abs/1611.02247): uses a Taylor Expansion to control the bias/variance tradeoff in off-policy methods 
 - The batch algorithms TNPG and TRPO (TRPO enables faster learning through larger batch sizes) as suggested by the paper [Benchmarking Deep Reinforcement Learning for Continuous Control](https://arxiv.org/abs/1604.06778)
